@@ -15,6 +15,10 @@ class AutorController {
 
     @PostMapping
     public ResponseEntity<?> create(@RequestBody @Valid AutorForm autorForm) {
+
+        if(autorRepository.existsByEmail(autorForm.getEmail())) {
+            return ResponseEntity.badRequest().body("Email já existe");
+        }
         autorRepository.save(autorForm.toEntity());
 
         return ResponseEntity.ok().build();
