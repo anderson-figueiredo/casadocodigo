@@ -18,7 +18,7 @@ public class Autor {
     @Email
     private String email;
 
-    @Max(value = 400)
+    @Size(max = 400)
     @NotBlank
     private String descricao;
 

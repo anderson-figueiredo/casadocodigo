@@ -1,8 +1,6 @@
 package br.com.dev.casadocodigo;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 
 public class AutorForm {
 
@@ -13,7 +11,7 @@ public class AutorForm {
     @Email
     private String email;
 
-    @Max(value=400)
+    @Size(max = 400)
     @NotBlank
     private String descricao;
 
