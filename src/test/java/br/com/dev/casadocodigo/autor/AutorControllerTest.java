@@ -1,9 +1,11 @@
 package br.com.dev.casadocodigo.autor;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
@@ -20,11 +22,20 @@ class AutorControllerTest {
     private AutorRepository autorRepository;
 
     @Test
-    void erro_email_unico() {
+    void erro_email_unico() throws Exception {
         autorRepository.save(new Autor("Gabriel", "email@jaexiste.com", "autor de ficcao cientifica"));
 
-        AutorForm emptyForm = new AutorForm();
-        mockMvc.perform(MockMvcRequestBuilders.post("/autor").content("{\"nome\": \"alexandre\", \"email\": \"email@jaexiste.com\", " +
-                "\"descricao\": \"lkjasddashdakhkdas\"}")).andExpect(status());
+        AutorForm autorComEmailQueJaExiste = new AutorForm();
+        autorComEmailQueJaExiste.setNome("Alexandre");
+        autorComEmailQueJaExiste.setEmail("email@jaexiste.com");
+        autorComEmailQueJaExiste.setDescricao("autor do treinamento");
+
+        String jsonAutorComEmailQueJaExiste = new ObjectMapper().writeValueAsString(autorComEmailQueJaExiste);
+
+        mockMvc.perform(MockMvcRequestBuilders
+                .post("/autor")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonAutorComEmailQueJaExiste))
+                .andExpect(status().isBadRequest());
     }
 }
