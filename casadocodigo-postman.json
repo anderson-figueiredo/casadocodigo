@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "6ada69d3-b7c2-4d8b-9a69-bbdd76269703",
+		"_postman_id": "32073e9a-b864-4061-bacf-ec3178ae3b08",
 		"name": "casadocodigo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "f8161032-3690-4830-ae9b-c27493ed4e90",
+						"id": "afb1d7db-c604-4cf5-8f12-363b4d76a889",
 						"exec": [
 							"pm.test(\"Status code is 400\", function () {",
 							"    pm.response.to.have.status(400);",
@@ -27,6 +27,88 @@
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"nome\": \"\",\n    \"email\": \"\",\n    \"descricao\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/autor",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"autor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "erro email invalido",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd5dc40a-df74-4334-ba59-5d513b6b8978",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Anderson\",\n    \"email\": \"teste\",\n    \"descricao\": \"Teste de erro de email inválido\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/autor",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"autor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "erro quantidade de caracteres na descrição",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0fcd4571-4768-4274-8f63-84c4587c50d9",
+						"exec": [
+							"pm.test(\"Status code is 400\", function () {",
+							"    pm.response.to.have.status(400);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Anderson\",\n    \"email\": \"teste@teste.com\",\n    \"descricao\": \"Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
