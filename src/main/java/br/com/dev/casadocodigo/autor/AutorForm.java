@@ -1,8 +1,8 @@
-package br.com.dev.casadocodigo;
+package br.com.dev.casadocodigo.autor;
 
 import javax.validation.constraints.*;
 
-public class AutorForm {
+class AutorForm {
 
     @NotBlank
     private String nome;

@@ -1,4 +1,4 @@
-package br.com.dev.casadocodigo;
+package br.com.dev.casadocodigo.autor;
 
 import org.springframework.util.Assert;
 
@@ -7,7 +7,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Autor {
+class Autor {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
