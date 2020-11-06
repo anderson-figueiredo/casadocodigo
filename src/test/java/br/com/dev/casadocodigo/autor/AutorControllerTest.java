@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+import static br.com.dev.casadocodigo.autor.AutorBuilder.umAutor;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -23,14 +24,13 @@ class AutorControllerTest {
 
     @Test
     void erro_email_unico() throws Exception {
-        autorRepository.save(new Autor("Gabriel", "email@jaexiste.com", "autor de ficcao cientifica"));
+        autorRepository.save(umAutor().chamado("Gabriel").comEmail("email@jaexiste.com").comDescricao("autor de ficcao cientifica").cria());
 
-        AutorForm autorComEmailQueJaExiste = new AutorForm();
-        autorComEmailQueJaExiste.setNome("Alexandre");
-        autorComEmailQueJaExiste.setEmail("email@jaexiste.com");
-        autorComEmailQueJaExiste.setDescricao("autor do treinamento");
-
-        String jsonAutorComEmailQueJaExiste = new ObjectMapper().writeValueAsString(autorComEmailQueJaExiste);
+        String jsonAutorComEmailQueJaExiste = umAutor()
+                .chamado("Alexandre")
+                .comEmail("email@jaexiste.com")
+                .comDescricao("autor da apostila de SOLID")
+                .comoJson();
 
         mockMvc.perform(MockMvcRequestBuilders
                 .post("/autor")
