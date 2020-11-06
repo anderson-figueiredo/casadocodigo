@@ -5,6 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.web.servlet.*;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -13,21 +16,15 @@ class AutorControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
+    @Autowired
+    private AutorRepository autorRepository;
+
     @Test
-    void erro() {
+    void erro_email_unico() {
+        autorRepository.save(new Autor("Gabriel", "email@jaexiste.com", "autor de ficcao cientifica"));
+
         AutorForm emptyForm = new AutorForm();
-//        mockMvc.perform()
+        mockMvc.perform(MockMvcRequestBuilders.post("/autor").content("{\"nome\": \"alexandre\", \"email\": \"email@jaexiste.com\", " +
+                "\"descricao\": \"lkjasddashdakhkdas\"}")).andExpect(status());
     }
-
-    @Test
-    void erro_email_invalido() { }
-
-    @Test
-    void erro_qtd_caracteres_na_descricao() { }
-
-    @Test
-    void sucesso() { }
-
-
-
 }
