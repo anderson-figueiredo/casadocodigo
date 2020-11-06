@@ -1,18 +1,45 @@
 {
 	"info": {
-		"_postman_id": "8e8bb4d2-8368-4859-81f4-3ca0bd30f835",
+		"_postman_id": "13b1a1ee-7c7d-42e9-a4e7-ea3bd9172f7e",
 		"name": "casadocodigo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "localhost:8080/autor",
+			"name": "erro",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
 					"raw": "{\n    \"nome\": \"\",\n    \"email\": \"\",\n    \"descricao\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/autor",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"autor"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "sucesso",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"nome\": \"Caio\",\n    \"email\": \"caio.bugorin@caelum.com.br\",\n    \"descricao\": \"Author de java\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
