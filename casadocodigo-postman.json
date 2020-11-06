@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "a5f6d211-702b-4366-967d-b557c4262dfc",
+		"_postman_id": "6ada69d3-b7c2-4d8b-9a69-bbdd76269703",
 		"name": "casadocodigo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -11,7 +11,7 @@
 				{
 					"listen": "test",
 					"script": {
-						"id": "b8514d1e-507c-4206-b128-5f73d6fdd8ca",
+						"id": "f8161032-3690-4830-ae9b-c27493ed4e90",
 						"exec": [
 							"pm.test(\"Status code is 400\", function () {",
 							"    pm.response.to.have.status(400);",

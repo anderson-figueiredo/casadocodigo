@@ -4,6 +4,7 @@ import org.springframework.util.Assert;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Autor {
@@ -21,6 +22,9 @@ public class Autor {
     @Size(max = 400)
     @NotBlank
     private String descricao;
+
+    @NotNull
+    private LocalDateTime criadoEm = LocalDateTime.now();
 
     @Deprecated
     public Autor(){}
