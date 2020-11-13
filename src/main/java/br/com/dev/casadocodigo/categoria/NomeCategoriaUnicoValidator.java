@@ -20,5 +20,8 @@ public class NomeCategoriaUnicoValidator implements Validator {
     public void validate(Object o, Errors errors) {
         NovaCategoriaRequest novaCategoriaRequest = (NovaCategoriaRequest) o;
 
+        if (categoriaRepository.existsByNome(novaCategoriaRequest.getNome())) {
+            errors.rejectValue("nome", "categoria.nome.unico");
+        }
     }
 }

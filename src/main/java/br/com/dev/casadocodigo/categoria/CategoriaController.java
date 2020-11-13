@@ -14,15 +14,13 @@ public class CategoriaController {
     @Autowired
     private CategoriaRepository categoriaRepository;
 
+    @InitBinder("novaCategoriaRequest")
     public void initBinder(WebDataBinder webDataBinder) {
         webDataBinder.addValidators(new NomeCategoriaUnicoValidator(categoriaRepository));
     }
 
     @PostMapping
     public ResponseEntity<?> cria(@RequestBody @Valid NovaCategoriaRequest novaCategoriaRequest) {
-        if(categoriaRepository.existsByNome(novaCategoriaRequest.getNome())) {
-            return ResponseEntity.badRequest().body("Categoria com este nome já existe");
-        }
 
         categoriaRepository.save(novaCategoriaRequest.toEntity());
         return ResponseEntity.ok().build();
