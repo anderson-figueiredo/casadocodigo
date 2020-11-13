@@ -14,12 +14,12 @@ class AutorController {
     private AutorRepository autorRepository;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid AutorForm autorForm) {
+    public ResponseEntity<?> create(@RequestBody @Valid NovoAutorRequest novoAutorRequest) {
 
-        if(autorRepository.existsByEmail(autorForm.getEmail())) {
-            return ResponseEntity.badRequest().body("Email já existe");
+        if(autorRepository.existsByEmail(novoAutorRequest.getEmail())) {
+            return ResponseEntity.status(422).body("Email já existente");
         }
-        autorRepository.save(autorForm.toEntity());
+        autorRepository.save(novoAutorRequest.toEntity());
 
         return ResponseEntity.ok().build();
     }

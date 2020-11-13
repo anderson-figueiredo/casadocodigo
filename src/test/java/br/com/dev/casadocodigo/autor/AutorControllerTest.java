@@ -38,7 +38,7 @@ class AutorControllerTest {
                 .post("/autor")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonAutorComEmailQueJaExiste))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().is(422));
     }
 
     @Test

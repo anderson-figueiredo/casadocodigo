@@ -2,7 +2,7 @@ package br.com.dev.casadocodigo.autor;
 
 import javax.validation.constraints.*;
 
-class AutorForm {
+class NovoAutorRequest {
 
     @NotBlank
     private String nome;
