@@ -3,7 +3,7 @@ package br.com.dev.casadocodigo.autor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -40,7 +40,6 @@ class AutorControllerTest {
                 .content(jsonAutorComEmailQueJaExiste))
                 .andExpect(status().isBadRequest());
     }
-
 
     @Test
     void grava_autor_sucesso() throws Exception {
@@ -95,12 +94,13 @@ class AutorControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    void erro_descricao_vazia() throws Exception {
+    @ParameterizedTest
+    @NullAndEmptySource
+    void erro_descricao_nulo_ou_vazia(String descricao) throws Exception {
         String formJson = umAutor()
                 .chamado("João")
                 .comEmail("joao@email.com")
-                .comDescricao("")
+                .comDescricao(descricao)
                 .comoJson();
 
         mockMvc.perform(MockMvcRequestBuilders
@@ -110,11 +110,12 @@ class AutorControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    void erro_email_vazio() throws Exception {
+    @ParameterizedTest
+    @NullAndEmptySource
+    void erro_email_nulo_ou_vazio(String email) throws Exception {
         String formJson = umAutor()
                 .chamado("João")
-                .comEmail("")
+                .comEmail(email)
                 .comDescricao("qualquer coisa bem pequena")
                 .comoJson();
 
@@ -125,27 +126,11 @@ class AutorControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Test
-    void erro_nome_vazio() throws Exception {
-        String formJson = umAutor()
-                .chamado("")
-                .comEmail("geovani@email.com")
-                .comDescricao("qualquer coisa bem pequena")
-                .comoJson();
-
-        mockMvc.perform(MockMvcRequestBuilders
-                .post("/autor")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(formJson))
-                .andExpect(status().isBadRequest());
-    }
-
-    @Test
     @ParameterizedTest
-    @ValueSource
-    void erro_nome_vazio_2() throws Exception {
+    @NullAndEmptySource
+    void erro_nome_nulo_ou_vazio(String nome) throws Exception {
         String formJson = umAutor()
-                .chamado("")
+                .chamado(nome)
                 .comEmail("geovani@email.com")
                 .comDescricao("qualquer coisa bem pequena")
                 .comoJson();
