@@ -19,8 +19,7 @@ public class CategoriaController {
             return ResponseEntity.badRequest().body("Categoria com este nome já existe");
         }
 
-        Categoria categoria = novaCategoriaRequest.toEntity();
-        categoriaRepository.save(categoria);
+        categoriaRepository.save(novaCategoriaRequest.toEntity());
         return ResponseEntity.ok().build();
     }
 }
