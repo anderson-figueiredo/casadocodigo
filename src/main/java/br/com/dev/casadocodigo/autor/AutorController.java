@@ -14,7 +14,7 @@ class AutorController {
     private AutorRepository autorRepository;
 
     @PostMapping
-    public ResponseEntity<?> create(@RequestBody @Valid NovoAutorRequest novoAutorRequest) {
+    public ResponseEntity<?> cria(@RequestBody @Valid NovoAutorRequest novoAutorRequest) {
 
         if(autorRepository.existsByEmail(novoAutorRequest.getEmail())) {
             return ResponseEntity.status(422).body("Email já existente");
