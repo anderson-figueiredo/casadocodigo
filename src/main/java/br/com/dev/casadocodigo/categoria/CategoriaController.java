@@ -15,9 +15,12 @@ public class CategoriaController {
 
     @PostMapping
     public ResponseEntity<?> cria(@RequestBody @Valid NovaCategoriaRequest novaCategoriaRequest) {
+        if(categoriaRepository.existsByNome(novaCategoriaRequest.getNome())) {
+            return ResponseEntity.badRequest().body("Categoria com este nome já existe");
+        }
+
         Categoria categoria = novaCategoriaRequest.toEntity();
         categoriaRepository.save(categoria);
-
         return ResponseEntity.ok().build();
     }
 }

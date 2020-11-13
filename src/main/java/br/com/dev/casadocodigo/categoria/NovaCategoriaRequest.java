@@ -14,4 +14,8 @@ public class NovaCategoriaRequest {
     public Categoria toEntity() {
         return new Categoria(this.nome);
     }
+
+    public String getNome() {
+        return this.nome;
+    }
 }
