@@ -41,7 +41,7 @@ class CategoriaControllerTest {
     }
 
     @Test
-    void criando_categoria() throws Exception {
+    void criando_categoria_com_sucesso() throws Exception {
         NovaCategoriaRequest novaCategoriaRequest = new NovaCategoriaRequest("Programacao");
 
         ObjectMapper objectMapper = new ObjectMapper();

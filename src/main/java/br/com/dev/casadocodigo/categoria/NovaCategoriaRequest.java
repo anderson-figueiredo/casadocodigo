@@ -7,6 +7,9 @@ public class NovaCategoriaRequest {
     @NotBlank
     private String nome;
 
+    @Deprecated
+    public NovaCategoriaRequest(){}
+
     public NovaCategoriaRequest(String nome) {
         this.nome = nome;
     }
