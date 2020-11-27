@@ -1,32 +1,57 @@
 package br.com.dev.casadocodigo.autor;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
+import br.com.dev.casadocodigo.ValidationErrorHandler;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.*;
+import org.junit.jupiter.params.provider.NullAndEmptySource;
+import org.mockito.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.*;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
 import static br.com.dev.casadocodigo.autor.AutorBuilder.umAutor;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@SpringBootTest
+//@SpringBootTest
+@WebMvcTest(AutorController.class)
 @AutoConfigureMockMvc
 class AutorControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Autowired
+    @Mock
+    private AutorController autorController;
+
+    @MockBean
     private AutorRepository autorRepository;
+
+//    @BeforeEach
+    void setup() {
+//        ExceptionHandlerExceptionResolver exceptionResolver = new ExceptionHandlerExceptionResolver() {
+//            @Override
+//            protected ServletInvocableHandlerMethod getExceptionHandlerMethod(HandlerMethod handlerMethod, Exception exception) {
+//                return new ServletInvocableHandlerMethod(new ValidationErrorHandler(),
+//                        new ExceptionHandlerMethodResolver(ValidationErrorHandler.class)
+//                                .resolveMethod(exception));
+//            }
+//        };
+//        exceptionResolver.afterPropertiesSet();
+        this.mockMvc = MockMvcBuilders.standaloneSetup(autorController)
+                .setControllerAdvice(new ValidationErrorHandler())
+//                .setHandlerExceptionResolvers(exceptionResolver)
+                .build();
+    }
 
     @Test
     void erro_email_unico() throws Exception {
-        autorRepository.save(umAutor().chamado("Gabriel").comEmail("email@jaexiste.com").comDescricao("autor de ficcao cientifica").cria());
+//        autorRepository.save(umAutor().chamado("Gabriel").comEmail("email@jaexiste.com").comDescricao("autor de ficcao cientifica").cria());
+        Mockito.when(autorRepository.existsByEmail("email@jaexiste.com")).thenReturn(true);
 
         String jsonAutorComEmailQueJaExiste = umAutor()
                 .chamado("Alexandre")
@@ -38,7 +63,7 @@ class AutorControllerTest {
                 .post("/autor")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(jsonAutorComEmailQueJaExiste))
-                .andExpect(status().is(422));
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -68,7 +93,7 @@ class AutorControllerTest {
                 .post("/autor")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(formJson))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -107,7 +132,7 @@ class AutorControllerTest {
                 .post("/autor")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(formJson))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @ParameterizedTest
@@ -123,7 +148,7 @@ class AutorControllerTest {
                 .post("/autor")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(formJson))
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @ParameterizedTest
