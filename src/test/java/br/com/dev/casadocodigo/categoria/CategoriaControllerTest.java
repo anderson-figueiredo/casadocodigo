@@ -11,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static br.com.dev.casadocodigo.categoria.NovaCategoriaRequestBuilder.umaCategoria;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -27,25 +28,23 @@ class CategoriaControllerTest {
     @Test
     public void erro_nome_unico() throws Exception {
         categoriaRepository.save(new Categoria("existente"));
-        mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content("{\"nome\":\"existente\"}")).andExpect(status().isBadRequest());
+
+        String json = umaCategoria().comNome("existente").criaCategoriaComoJson();
+
+        mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest());
     }
 
     @ParameterizedTest
     @NullAndEmptySource
     public void erro_nome_nulo_ou_vazio(String nome) throws Exception {
-        NovaCategoriaRequest novaCategoriaRequest = new NovaCategoriaRequest(nome);
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(novaCategoriaRequest);
+        String json = umaCategoria().comNome(nome).criaCategoriaComoJson();
 
         mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest());
     }
 
     @Test
     void criando_categoria_com_sucesso() throws Exception {
-        NovaCategoriaRequest novaCategoriaRequest = new NovaCategoriaRequest("Programacao");
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String json = objectMapper.writeValueAsString(novaCategoriaRequest);
+        String json = umaCategoria().comNome("Programação").criaCategoriaComoJson();
 
         mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
     }
