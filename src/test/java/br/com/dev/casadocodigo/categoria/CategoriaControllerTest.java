@@ -1,5 +1,6 @@
 package br.com.dev.casadocodigo.categoria;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -32,11 +33,20 @@ class CategoriaControllerTest {
     @ParameterizedTest
     @NullAndEmptySource
     public void erro_nome_nulo_ou_vazio(String nome) throws Exception {
-        NovaCategoriaRequest novaCategoriaRequest = new NovaCategoriaRequest();
-        novaCategoriaRequest.setNome(nome);
+        NovaCategoriaRequest novaCategoriaRequest = new NovaCategoriaRequest(nome);
         ObjectMapper objectMapper = new ObjectMapper();
         String json = objectMapper.writeValueAsString(novaCategoriaRequest);
 
         mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void criando_categoria() throws Exception {
+        NovaCategoriaRequest novaCategoriaRequest = new NovaCategoriaRequest("Programacao");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String json = objectMapper.writeValueAsString(novaCategoriaRequest);
+
+        mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isOk());
     }
 }

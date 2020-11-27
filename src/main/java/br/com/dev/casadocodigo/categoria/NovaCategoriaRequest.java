@@ -7,6 +7,10 @@ public class NovaCategoriaRequest {
     @NotBlank
     private String nome;
 
+    public NovaCategoriaRequest(String nome) {
+        this.nome = nome;
+    }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
