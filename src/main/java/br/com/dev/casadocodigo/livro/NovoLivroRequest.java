@@ -31,6 +31,7 @@ public class NovoLivroRequest {
     @NotNull
     private Long autorId;
 
-
-
+    public String getTitulo() {
+        return titulo;
+    }
 }
