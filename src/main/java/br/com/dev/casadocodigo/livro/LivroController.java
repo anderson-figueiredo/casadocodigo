@@ -11,7 +11,7 @@ public class LivroController {
 
 
     @PostMapping
-    public ResponseEntity cria(NovoLivroRquest novoLivroRquest){
+    public ResponseEntity cria(NovoLivroRequest novoLivroRequest){
         return ResponseEntity.ok().build();
     }
 }
