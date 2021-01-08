@@ -16,9 +16,9 @@ class NomeCategoriaUnicoValidatorTest {
 
     @BeforeEach
     public void setup(){
-        this.categoriaRepository = Mockito.mock(CategoriaRepository.class);
-        this.errors = Mockito.mock(Errors.class);
-        this.novaCategoriaRequest = Mockito.mock(NovaCategoriaRequest.class);
+        this.categoriaRepository = mock(CategoriaRepository.class);
+        this.errors = mock(Errors.class);
+        this.novaCategoriaRequest = mock(NovaCategoriaRequest.class);
         this.nomeCategoriaUnicoValidator = new NomeCategoriaUnicoValidator(categoriaRepository);
     }
 
