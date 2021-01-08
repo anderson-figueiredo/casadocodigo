@@ -7,7 +7,7 @@ import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Entity
-class Autor {
+public class Autor {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
