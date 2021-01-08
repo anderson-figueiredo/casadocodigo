@@ -26,15 +26,38 @@ public class Livro {
 
     @NotNull @DecimalMin("20")
     private BigDecimal preco;
+    @Min(100)
     private int numeroDePaginas;
 
-    @NotBlank @ISBN @Column(unique = true)
+    @NotBlank @Column(unique = true)
     private String isbn;
+
     private LocalDate dataDePublicacao;
 
+    @ManyToOne
     @NotNull @Valid
     private Categoria categoria;
 
-    @NotNull
+    @ManyToOne
+    @NotNull @Valid
     private Autor autor;
+
+    @Deprecated
+    public Livro() {
+    }
+
+    public Livro(@NotBlank String titulo, @NotBlank @Size(max = 500) String resumo, String sumario,
+                 @NotNull @DecimalMin("20") BigDecimal preco, @Min(100) int numeroDePaginas,
+                 @NotBlank String isbn, LocalDate dataDePublicacao, @NotNull @Valid Categoria categoria,
+                 @NotNull @Valid Autor autor) {
+        this.titulo = titulo;
+        this.resumo = resumo;
+        this.sumario = sumario;
+        this.preco = preco;
+        this.numeroDePaginas = numeroDePaginas;
+        this.isbn = isbn;
+        this.dataDePublicacao = dataDePublicacao;
+        this.categoria = categoria;
+        this.autor = autor;
+    }
 }
