@@ -1,0 +1,17 @@
+POST http://localhost:8080/livro
+Content-Type: application/json
+
+{"titulo": "spring"}
+
+###
+POST http://localhost:8080/livro
+Content-Type: application/json
+
+{"titulo": "spring"}
+
+<> 2021-01-08T162837.400.json
+<> 2021-01-08T162541.400.json
+<> 2021-01-08T162447.400.json
+<> 2021-01-08T162238.400.json
+
+###
