@@ -31,7 +31,7 @@ class CategoriaControllerTest {
 
         String json = umaCategoria().comNome("existente").criaCategoriaComoJson();
 
-        mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest());
+        mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isUnprocessableEntity());
     }
 
     @ParameterizedTest
@@ -39,7 +39,7 @@ class CategoriaControllerTest {
     public void erro_nome_nulo_ou_vazio(String nome) throws Exception {
         String json = umaCategoria().comNome(nome).criaCategoriaComoJson();
 
-        mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isBadRequest());
+        mockMvc.perform(post("/categorias").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isUnprocessableEntity());
     }
 
     @Test
