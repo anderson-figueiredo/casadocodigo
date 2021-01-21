@@ -17,7 +17,7 @@ class AutorController {
     public ResponseEntity<?> cria(@RequestBody @Valid NovoAutorRequest novoAutorRequest) {
 
         if(autorRepository.existsByEmail(novoAutorRequest.getEmail())) {
-            return ResponseEntity.status(422).body("Email já existente");
+            return ResponseEntity.status(422).body("{ \"message\": \"Email já existente\"}");
         }
         autorRepository.save(novoAutorRequest.toEntity());
 
