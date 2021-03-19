@@ -2,10 +2,10 @@ package br.com.dev.casadocodigo.livro;
 
 import br.com.dev.casadocodigo.autor.Autor;
 import br.com.dev.casadocodigo.categoria.Categoria;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.boot.test.autoconfigure.orm.jpa.*;
 import org.springframework.validation.Errors;
 
 import java.math.BigDecimal;
@@ -13,25 +13,27 @@ import java.time.LocalDate;
 
 import static org.mockito.Mockito.*;
 
+@DataJpaTest
 public class IsbnUnicoValidatorTest {
 
-    @Autowired
-    private TestEntityManager testEntityManager;
-    @Autowired
     private LivroRepositorio livroRepositorio;
+    private Errors errors;
 
+    @BeforeEach
+    void setUp() {
+        this.livroRepositorio = mock(LivroRepositorio.class);
+        this.errors = mock(Errors.class);
+    }
 
     @Test
-    void validate__deve_retornar_falso_caso_nao_exista_isbn() {
-        Categoria terror = testEntityManager.persist(new Categoria("terror"));
-        Autor autor = testEntityManager.persist(new Autor("Escritor", "a@a.com", "autor de livros"));
-        Livro livro = testEntityManager.persist(new Livro("titulo", "livro de teste", "sumario",
-                BigDecimal.valueOf(42L), 200, "123456789", LocalDate.now(), terror, autor));
-
+    void validate__nao_deve_conter_erro_caso_isbn_nao_exista() {
         IsbnUnicoValidator isbnUnicoValidator = new IsbnUnicoValidator(livroRepositorio);
 
-        Errors errors = mock(Errors.class);
+        when(livroRepositorio.existsByIsbn("123456789")).thenReturn(true);
+
         NovoLivroRequest novoLivroRequest = new NovoLivroRequest();
+
+
         isbnUnicoValidator.validate(novoLivroRequest, errors);
 
         verify(errors, never()).rejectValue("isbn", "isbn.ja.existe");

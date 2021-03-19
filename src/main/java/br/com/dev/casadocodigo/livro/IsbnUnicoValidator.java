@@ -20,6 +20,8 @@ public class IsbnUnicoValidator implements Validator {
     public void validate(Object o, Errors errors) {
         NovoLivroRequest request = (NovoLivroRequest) o;
 
-
+        if (livroRepositorio.existsByIsbn(request.getIsbn())) {
+            errors.rejectValue("isbn", "isbn.ja.existe");
+        }
     }
 }
