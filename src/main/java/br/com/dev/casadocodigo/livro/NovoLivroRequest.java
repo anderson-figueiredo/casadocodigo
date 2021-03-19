@@ -1,5 +1,11 @@
 package br.com.dev.casadocodigo.livro;
 
+import br.com.dev.casadocodigo.autor.Autor;
+import br.com.dev.casadocodigo.autor.AutorRepository;
+import br.com.dev.casadocodigo.categoria.Categoria;
+import br.com.dev.casadocodigo.categoria.CategoriaRepository;
+import br.com.dev.casadocodigo.exception.NotFoundException;
+
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -37,5 +43,17 @@ public class NovoLivroRequest {
 
     public String getIsbn() {
         return isbn;
+    }
+
+    public Livro toEntity(Categoria categoria, Autor autor) {
+        return new Livro(titulo, resumo, sumario, preco, numeroDePaginas, isbn, dataDePublicacao, categoria, autor);
+    }
+
+    public Long getCategoryId() {
+        return categoriaId;
+    }
+
+    public Long getAutorId() {
+        return autorId;
     }
 }
