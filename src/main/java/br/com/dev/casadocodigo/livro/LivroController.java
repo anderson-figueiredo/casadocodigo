@@ -16,7 +16,7 @@ public class LivroController {
 
     @InitBinder("novoLivroRequest")
     public void initBinder(WebDataBinder binder) {
-        binder.addValidators(new TituloLivroUnicoValidator(livroRepositorio));
+        binder.addValidators(new TituloLivroUnicoValidator(livroRepositorio), new IsbnUnicoValidator(livroRepositorio));
     }
 
     @PostMapping
